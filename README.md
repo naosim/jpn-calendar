@@ -13,6 +13,8 @@
 - js: https://naosim.github.io/jpn-calendar/dist/jpnCal2024.js
 - mjs: https://naosim.github.io/jpn-calendar/dist/jpnCal2024.mjs
 
+## 本データを読み込んだサンプル
+[こちら](https://naosim.github.io/jpn-calendar/sample.html)
 
 ## カレンダーの生成方法
 1. jpnCal.js内の祝日をメンテする

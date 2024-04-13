@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<style>
+  th, td {
+    border: solid 1px;
+    vertical-align: top;
+    
+  }
+  th {
+    background-color: #eee;
+  }
+  td {
+    width:80px;
+    height: 80px;
+  }
+  .土,.日,.祝日 {
+    background-color: #faa;
+  }
+  .月外 {
+    color: #999;
+  }
+  .今日 {
+    background-color: yellow;
+  }
+
+  table {
+    border-collapse:  collapse;
+  }
+</style>
+
+<script src="https://naosim.github.io/jpn-calendar/dist/jpnCal2024.js"></script>
+<div id="main">
+  <h1>カレンダー</h1>
+  <h2></h2>
+  <button onclick="前の月を表示する()">◀前の月</button>
+  <button onclick="次の月を表示する()">次の月▶</button>
+  <table>
+    <thead>
+      <tr>
+        <th>週数</th>
+        <th>月</th>
+        <th>火</th>
+        <th>水</th>
+        <th>木</th>
+        <th>金</th>
+        <th>土</th>
+        <th>日</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+<script>
+function calDateToHtml(calDate) {
+  return `
+  <td class="${calDate.祝日名 ? '祝日' : calDate.曜日} ${calDate.日付が対象月外 ? '月外' : ''}">
+    <div class="${calDate.日付 == today ? '今日' : ''}">${calDate.日}</div>
+    <div>${calDate.祝日名 || ""}</div>
+  </td>`;
+}
+
+
+const cal = getJpnCal2024();
+function 更新(targetMonth) {
+  const c = cal.カレンダー[targetMonth - 1];
+  console.log(`${targetMonth}月`)
+  console.log(c);
+
+  // 年月の表示
+  document.querySelector("h2").innerText = `${c.年}年${c.月}月`
+
+  // カレンダーデータからテーブルを生成
+  const tableData = c.週.map(w => [`<td>${w.週数}週</td>`, ...w.dates.map(calDateToHtml)].join(""));
+  document.querySelector("tbody").innerHTML = tableData.map(w => `<tr>${w}</tr>`).join("");
+}
+function 前の月を表示する() {
+  if(対象月 <= 1) {
+    return 
+  }
+  対象月--;
+  更新(対象月);
+}
+function 次の月を表示する() {
+  if(対象月 >= 12) {
+    return 
+  }
+  対象月++;
+  更新(対象月);
+}
+
+// 初期表示
+var today = new Date().toLocaleDateString()
+var 対象月 = new Date().getMonth() + 1;
+更新(対象月);
+</script>
