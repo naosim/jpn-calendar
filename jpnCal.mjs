@@ -111,6 +111,9 @@ class CalWeek {
  * @property {number} day - js標準のDate型のday。日曜日が0
  * @property {string|undefined} 祝日名
  * @property {boolean} 日付が対象月外
+ * @property {boolean} 土日
+ * @property {boolean} 土日祝日
+ * @property {boolean} 月末
  */
 /**
  * 
@@ -119,13 +122,29 @@ class CalWeek {
  * @returns {CalDate}
  */
 function createCalDate(日付, 対象年月) {
+  const 曜日 = ["日","月","火","水","木","金","土"][日付.getDay()]
+  const 祝日名 = Holiday.getHoliday(日付)
+  const 土日 = 曜日 == "土" || 曜日 == "日"
+  var 月末の日付 = [new Date(日付)]
+    .map(v => {
+      // 翌月1日の前の日が当月末
+      v.setDate(1);
+      v.setMonth(v.getMonth() + 1);
+      v.setDate(v.getDate() - 1);
+      return v.toLocaleDateString();
+    })[0]
+  ;
+
   return {
     日付: 日付.toLocaleDateString(),
     日: 日付.getDate(),
-    曜日: ["日","月","火","水","木","金","土"][日付.getDay()],
+    曜日,
     day: 日付.getDay(),
-    祝日名: Holiday.getHoliday(日付),
+    祝日名,
     日付が対象月外: 日付.getFullYear() != 対象年月.年 || 日付.getMonth() + 1 != 対象年月.月,
+    土日,
+    土日祝日: !!祝日名 || 曜日 == "土" || 曜日 == "日",
+    月末: 日付.toLocaleDateString() == 月末の日付
   };
 }
 

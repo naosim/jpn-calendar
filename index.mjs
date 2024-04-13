@@ -1,9 +1,11 @@
 import { jpnCal } from "./jpnCal.mjs";
+// @ts-ignore
 import fs from "fs";
 /** @type {number} */
+// @ts-ignore
 const targetYear = parseInt(process.argv[2]);
 // 設定
-const version = "0.4.0"
+const version = "0.6.0"
 const jsonFilename = `dist/jpnCal${targetYear}.json`
 const jsFilename = `dist/jpnCal${targetYear}.js`
 const mjsFilename = `dist/jpnCal${targetYear}.mjs`
