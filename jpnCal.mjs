@@ -70,6 +70,12 @@ class Calendar {
   /** @type {CalWeek[]} */
   週;
 
+  /** @type {number} 当月内の日数*/
+  日数
+
+  /** @type {number} 当月内の平日数*/
+  平日数
+
   /**
    * 
    * @param {YearMonth} 年月 
@@ -79,6 +85,8 @@ class Calendar {
     this.年 = 年月.年;
     this.月 = 年月.月;
     this.週 = 週;
+    this.日数 = this.週.reduce((memo, w) => memo + w.dates.filter(v => !v.日付が対象月外).length, 0)
+    this.平日数 = this.週.reduce((memo, w) => memo + w.dates.filter(v => !v.日付が対象月外 && !v.土日祝日).length, 0)
   }
 
 }
@@ -88,6 +96,8 @@ class CalWeek {
   週数;
   /** @type {CalDate[]} */
   dates;
+  /** @type number */
+  平日数;
 
   /**
    * 
@@ -97,6 +107,7 @@ class CalWeek {
   constructor(週数, week) {
     this.週数 = 週数;
     this.dates = week;
+    this.平日数 = this.dates.filter(v => !v.土日祝日).length
   }
   push(date) {
     this.dates.push(date);
