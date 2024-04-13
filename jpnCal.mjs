@@ -9,7 +9,7 @@ function create(year) {
     while(対象年月.以前(date)) {
       const week = [];
       for(var i = 0; i < 7; i++) {
-        week.push(CalDate.create(date, 対象年月));
+        week.push(createCalDate(date, 対象年月));
         date.setDate(date.getDate() + 1);// 日付を1つ進める
       }
       if(lastWeek == null) {
@@ -98,42 +98,30 @@ class CalWeek {
   }
 }
 
-class CalDate {
-  /** @type {string} */
-  日付;
-  /** @type {number} */
-  日;
-  /** @type {string|undefined} */
-  祝日名;
-  /** @type {boolean} */
-  日付が対象月外;
-  /**
-   * 
-   * @param {string} 日付 
-   * @param {number} 日 
-   * @param {string|undefined} 祝日名 
-   * @param {boolean} 日付が対象月外 
-   */
-  constructor(日付, 日, 祝日名, 日付が対象月外) {
-    this.日付 = 日付;
-    this.日 = 日;
-    this.祝日名 = 祝日名;
-    this.日付が対象月外 = 日付が対象月外;
-  }
-
-  /**
-   * 
-   * @param {Date} 日付 
-   * @param {YearMonth} 対象年月 
-   */
-  static create(日付, 対象年月) {
-    return new CalDate(
-      日付.toLocaleDateString(),
-      日付.getDate(),
-      Holiday.getHoliday(日付),
-      日付.getFullYear() != 対象年月.年 || 日付.getMonth() + 1 != 対象年月.月
-    );
-  }
+/** 
+ * @typedef CalDate
+ * @property  {string} 日付
+ * @property {number} 日
+ * @property {string} 曜日
+ * @property {number} day - js標準のDate型のday。日曜日が0
+ * @property {string|undefined} 祝日名
+ * @property {boolean} 日付が対象月外
+ */
+/**
+ * 
+ * @param {Date} 日付 
+ * @param {YearMonth} 対象年月 
+ * @returns {CalDate}
+ */
+function createCalDate(日付, 対象年月) {
+  return {
+    日付: 日付.toLocaleDateString(),
+    日: 日付.getDate(),
+    曜日: ["日","月","火","水","木","金","土"][日付.getDay()],
+    day: 日付.getDay(),
+    祝日名: Holiday.getHoliday(日付),
+    日付が対象月外: 日付.getFullYear() != 対象年月.年 || 日付.getMonth() + 1 != 対象年月.月,
+  };
 }
 
 class Holiday {

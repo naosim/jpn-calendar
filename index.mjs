@@ -1,13 +1,13 @@
 import { jpnCal } from "./jpnCal.mjs";
 import fs from "fs";
-
+const targetYear = process.argv[2];
 // 設定
-const version = "0.2.0"
+const version = "0.3.0"
 const jsonFilename = `dist/jpnCal${targetYear}.json`
 const jsFilename = `dist/jpnCal${targetYear}.js`
 const mjsFilename = `dist/jpnCal${targetYear}.mjs`
 
-const targetYear = process.argv[2];
+
 const jpnCalObj = {
   meta: {
     version: version,
