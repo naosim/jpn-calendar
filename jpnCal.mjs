@@ -1,5 +1,3 @@
-// import process from "process";
-
 function create(year) {
   var 週数 = 0;
   /** @type {CalWeek | null} */
@@ -64,7 +62,6 @@ class Calendar {
   年
   /** @type {number} */
   月;
-
   /** @type {CalWeek[]} */
   週;
 
@@ -224,17 +221,5 @@ class Holiday {
   }
 }
 
-if(typeof process !== 'undefined') {
-  const targetYear = process.argv[2];
-  const result = {
-    meta: {
-      version: "0.1.0",
-      対象年: targetYear
-    },
-    カレンダー: create(targetYear),
-    その他: {
-      翌年3月まで: create(targetYear + 1).slice(0, 3)
-    }
-  }  
-  console.log(JSON.stringify(result, null, "  "));
-}
+export var jpnCal = {};
+jpnCal.create = create;

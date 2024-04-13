@@ -1,10 +1,22 @@
 # jpn-calendar
-日本のカレンダー(JSON)
-2024年のカレンダーは[こちら](https://naosim.github.io/jpn-calendar/dist/jpnCal_2024.json)
+日本のカレンダーデータです。  
+独自のカレンダーアプリを作る際に、本データを使うとjs標準のDate型から作るより楽です。  
 
-# カレンダーの生成方法
+## 特徴
+- 週は月曜始まり
+- 祝日のデータが入っている  
+- 週数が入っている
+
+## 出力
+2024年のカレンダーはこちら
+- json: https://naosim.github.io/jpn-calendar/dist/jpnCal2024.json
+- js: https://naosim.github.io/jpn-calendar/dist/jpnCal2024.js
+- mjs: https://naosim.github.io/jpn-calendar/dist/jpnCal2024.mjs
+
+
+## カレンダーの生成方法
 1. jpnCal.js内の祝日をメンテする
 2. 次のコマンドで生成する。targetYearに西暦を入れること
 ```
-node jpnCal.js [targetYear] > dist/jpnCal_[targetYear].json
+node jpnCal.mjs [targetYear]
 ```
