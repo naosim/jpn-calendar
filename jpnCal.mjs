@@ -1,3 +1,8 @@
+/**
+ * 
+ * @param {number} year 
+ * @returns 
+ */
 function create(year) {
   var 週数 = 0;
   /** @type {CalWeek | null} */
