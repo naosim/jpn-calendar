@@ -56,6 +56,8 @@ class YearMonth {
   constructor(year, month) {
     this.年 = year;
     this.月 = month;
+    this.年度 = month < 4 ? year - 1 : year;
+    this.四半期 = [0, 4, 4, 4, 1, 1, 1, 2, 2, 2, 3, 3, 3][month];
   }
   /**
    * 
@@ -72,14 +74,16 @@ class Calendar {
   年
   /** @type {number} */
   月;
+  /** @type {number} */
+  年度
+  /** @type {number} */
+  四半期;
+  /** @type {number} 当月内の日数*/
+  日数;
+  /** @type {number} 当月内の平日数*/
+  平日数;
   /** @type {CalWeek[]} */
   週;
-
-  /** @type {number} 当月内の日数*/
-  日数
-
-  /** @type {number} 当月内の平日数*/
-  平日数
 
   /**
    * 
@@ -89,6 +93,8 @@ class Calendar {
   constructor(年月, 週) {
     this.年 = 年月.年;
     this.月 = 年月.月;
+    this.年度 = 年月.年度;
+    this.四半期 = 年月.四半期;
     this.週 = 週;
     this.日数 = this.週.reduce((memo, w) => memo + w.dates.filter(v => !v.日付が対象月外).length, 0)
     this.平日数 = this.週.reduce((memo, w) => memo + w.dates.filter(v => !v.日付が対象月外 && !v.土日祝日).length, 0)
