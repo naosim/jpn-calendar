@@ -4,41 +4,63 @@
 <style>
   th, td {
     border: solid 1px;
+    border-color: black;
     vertical-align: top;
-    
   }
   th {
     background-color: #eee;
   }
   td {
-    width:80px;
-    height: 80px;
+    width:72px;
+    height: 72px;
+    padding:4px;
   }
   .土,.日,.祝日 {
     background-color: #faa;
   }
   .月外 {
-    color: #999;
+    color: #aaa;
   }
   .今日 {
     background-color: yellow;
+  }
+  th.週 {
+    background-color: unset;
+  }
+  .週 {
+    border-style: none;
+  }
+  .週>div {
+    color: white;
+    font-weight: bold;
+    background-color: #555;
+    border-radius: 4px;
+    padding: 2px;
+    text-align: center;
   }
 
   table {
     border-collapse:  collapse;
   }
+
+  #monthData {
+    display: inline-block;
+    background-color: #ffd;
+    padding: 4px;
+  }
 </style>
 
 <script src="https://naosim.github.io/jpn-calendar/dist/jpnCal2024.js"></script>
+<!-- <script src="./dist/jpnCal2024.js"></script> -->
+
 <div id="main">
   <h1>カレンダー</h1>
   <h2></h2>
-  <button onclick="前の月を表示する()">◀前の月</button>
-  <button onclick="次の月を表示する()">次の月▶</button>
+  <div id="monthData"></div>
   <table>
     <thead>
       <tr>
-        <th>週数</th>
+        <th class="週">週数</th>
         <th>月</th>
         <th>火</th>
         <th>水</th>
@@ -50,6 +72,8 @@
     </thead>
     <tbody></tbody>
   </table>
+  <button onclick="前の月を表示する()">◀前の月</button>
+  <button onclick="次の月を表示する()">次の月▶</button>
 </div>
 <script>
 function calDateToHtml(calDate) {
@@ -70,8 +94,10 @@ function 更新(targetMonth) {
   // 年月の表示
   document.querySelector("h2").innerText = `${c.年}年${c.月}月`
 
+  document.querySelector("#monthData").innerHTML = `日数: ${c.日数}<br>平日数: ${c.平日数}<br>年度/Q: FY${c.年度}/${c.四半期}Q`
+
   // カレンダーデータからテーブルを生成
-  const tableData = c.週.map(w => [`<td>${w.週数}週</td>`, ...w.dates.map(calDateToHtml)].join(""));
+  const tableData = c.週.map(w => [`<td class="週"><div>${w.週数}週</div></td>`, ...w.dates.map(calDateToHtml)].join(""));
   document.querySelector("tbody").innerHTML = tableData.map(w => `<tr>${w}</tr>`).join("");
 }
 function 前の月を表示する() {
