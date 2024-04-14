@@ -15,6 +15,12 @@
     height: 72px;
     padding:4px;
   }
+  td>div {
+    text-align: center;
+  }
+  td>div.date {
+    font-size: 20pt;
+  }
   .土,.日,.祝日 {
     background-color: #faa;
   }
@@ -79,7 +85,7 @@
 function calDateToHtml(calDate) {
   return `
   <td class="${calDate.祝日名 ? '祝日' : calDate.曜日} ${calDate.日付が対象月外 ? '月外' : ''}">
-    <div class="${calDate.日付 == today ? '今日' : ''}">${calDate.日}</div>
+    <div class="date ${calDate.日付 == today ? '今日' : ''}">${calDate.日}</div>
     <div>${calDate.祝日名 || ""}</div>
   </td>`;
 }
