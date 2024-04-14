@@ -90,6 +90,20 @@ function calDateToHtml(calDate) {
   </td>`;
 }
 
+function 自動更新() {
+  更新(対象月);
+
+  // 次回更新
+  const tomorrow = new Date(new Date().toLocaleDateString());
+  tomorrow.setDate(tomorrow.getDate() + 1);// 明日
+  var timeout = Math.min(Math.max(1000, tomorrow.getTime() - Date.now()), 60 * 60 * 1000);
+
+  console.log(`更新。次回更新は${timeout > 60 * 1000 ? Math.floor(timeout / 60 / 1000) + '分後':Math.floor(timeout / 1000) + '秒後'}`)
+
+  setTimeout(自動更新, timeout)
+}
+
+
 
 const cal = getJpnCal2024();
 function 更新(targetMonth) {
@@ -123,6 +137,7 @@ function 次の月を表示する() {
 
 // 初期表示
 var today = new Date().toLocaleDateString()
+/** @type {number} 対象月 - 1オリジン */
 var 対象月 = new Date().getMonth() + 1;
-更新(対象月);
+自動更新();
 </script>
