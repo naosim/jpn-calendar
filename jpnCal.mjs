@@ -131,6 +131,7 @@ class CalWeek {
  * @property {number} 日
  * @property {string} 曜日
  * @property {number} day - js標準のDate型のday。日曜日が0
+ * @property {number} 今年の日数
  * @property {string|undefined} 祝日名
  * @property {boolean} 日付が対象月外
  * @property {boolean} 土日
@@ -157,11 +158,15 @@ function createCalDate(日付, 対象年月) {
     })[0]
   ;
 
+  const 元日 = new Date(`${日付.getFullYear()}/1/1`);
+
+
   return {
     日付: 日付.toLocaleDateString(),
     日: 日付.getDate(),
     曜日,
     day: 日付.getDay(),
+    今年の日数: (日付.getTime() - 元日.getTime())/(1000*60*60*24) + 1,
     祝日名,
     日付が対象月外: 日付.getFullYear() != 対象年月.年 || 日付.getMonth() + 1 != 対象年月.月,
     土日,

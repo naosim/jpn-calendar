@@ -5,7 +5,7 @@ import fs from "fs";
 // @ts-ignore
 const targetYear = parseInt(process.argv[2]);
 // 設定
-const version = "0.10.0"
+const version = "0.11.0"
 const jsonFilename = `dist/jpnCal${targetYear}.json`
 const jsFilename = `dist/jpnCal${targetYear}.js`
 const mjsFilename = `dist/jpnCal${targetYear}.mjs`
