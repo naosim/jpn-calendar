@@ -39,7 +39,12 @@ function create(year) {
  */
 function カレンダーの最初の日付を取得する(月初) {
   const result = new Date(月初);
-  result.setDate(result.getDate() - (result.getDay() > 0 ? result.getDay() - 1 : 7));
+  if(result.getDay() == 0) {
+    result.setDate(result.getDate() - 6)
+  } else {
+    result.setDate(result.getDate() - result.getDay() + 1);
+  }
+  
   return result;
 }
 
